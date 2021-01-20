@@ -1,12 +1,15 @@
+package com.example.thenamequizapp.classes;
+
+import com.example.thenamequizapp.classes.Person;
+
 import java.util.ArrayList;
 
 public class Database {
     String dbName;
     ArrayList<Person> persons;
 
-    public Database(String dbName, ArrayList<Person> persons) {
+    public Database(String dbName) {
         this.dbName = dbName;
-        this.persons = persons;
     }
 
     public String getDbName() {

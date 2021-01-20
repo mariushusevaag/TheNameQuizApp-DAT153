@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TheNameQuizApp</string>
+    <string name="back_to_database">Back to Database</string>
+    <string name="write_a_name">Write a name...</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="save_person">Save Person</string>
+    <string name="pic_of_selected_person">Pic of selected person</string>
 </resources>

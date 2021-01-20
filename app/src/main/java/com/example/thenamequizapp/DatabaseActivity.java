@@ -12,6 +12,10 @@ public class DatabaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database);
+
+//        TODO:
+//          -Get all entries in database
+//          -Show all entries that are collected
     }
 
     public void backToMenu(View View) {
