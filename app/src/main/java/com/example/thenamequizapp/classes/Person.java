@@ -1,5 +1,6 @@
 package com.example.thenamequizapp.classes;
 
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 
 public class Person {
@@ -8,9 +9,11 @@ public class Person {
 //    -Ordne klassen for bilder
 
     private String name;
+    private Drawable img;
 
-    public Person(String name) {
+    public Person(String name, Drawable img) {
         this.name = name;
+        this.img = img;
     }
 
     public String getName() {
@@ -21,12 +24,12 @@ public class Person {
         this.name = name;
     }
 
-//    public Image getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(Image image) {
-//        this.image = image;
-//    }
+    public Drawable getImg() {
+        return img;
+    }
+
+    public void setImg(Drawable img) {
+        this.img = img;
+    }
 
 }
