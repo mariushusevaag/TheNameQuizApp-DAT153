@@ -4,27 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".QuizActivity">
 
     <Button
-        android:id="@+id/startQuizBtn"
+        android:id="@+id/backToMenu2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginBottom="22dp"
-        android:onClick="startQuiz"
-        android:text="Start Quiz"
-        app:layout_constraintBottom_toTopOf="@+id/exploreDatabaseBtn"
-        app:layout_constraintStart_toStartOf="@+id/exploreDatabaseBtn" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="backToMenu"
+        android:text="Back to Menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/exploreDatabaseBtn"
+    <TextView
+        android:id="@+id/quizTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="323dp"
-        android:onClick="exploreDatabase"
-        android:text="Explore Database"
+        android:text="This is the quiz activity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
