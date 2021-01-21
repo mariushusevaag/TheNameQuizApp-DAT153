@@ -19,12 +19,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkDb();
+    }
+
+    //Function for checking if db is empty & adding stock persons if empty
+    public void checkDb() {
+        //Brings persons from db
         ArrayList<Person> database = ((AppHelper) this.getApplication()).getPersons();
 
+        //Checks if the  db is empty
         if(database.isEmpty()) {
+            //Makes persons
             Person p1 = new Person("Jens", R.drawable.jens);
             Person p2 = new Person("Erna", R.drawable.erna);
 
+            //Adds persons to db
             ((AppHelper) this.getApplication()).addPersons(p1);
             ((AppHelper) this.getApplication()).addPersons(p2);
         }

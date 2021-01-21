@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.thenamequizapp.adapters.CustomAdapter;
 import com.example.thenamequizapp.classes.Person;
 import com.example.thenamequizapp.helpers.AppHelper;
 
@@ -33,16 +34,19 @@ public class DatabaseActivity extends AppCompatActivity {
 
 
         //Taking only persons names for now
-        ArrayList<String> personNames = new ArrayList<String>();
-        for (Person person : database) {
-            personNames.add(person.getName());
-        }
+//        ArrayList<String> personNames = new ArrayList<String>();
+//        for (Person person : database) {
+//            personNames.add(person.getName());
+//        }
 
         //Create array adapter
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, personNames);
+        //ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, personNames);
+        CustomAdapter customAdapter = new CustomAdapter(DatabaseActivity.this, database);
+
 
         //Lists all the persons
-        mListView.setAdapter(itemsAdapter);
+        //mListView.setAdapter(itemsAdapter);
+        mListView.setAdapter(customAdapter);
     }
 
     public void backToMenu(View View) {

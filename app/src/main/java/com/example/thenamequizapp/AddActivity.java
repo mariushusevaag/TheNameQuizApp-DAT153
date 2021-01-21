@@ -39,42 +39,64 @@ public class AddActivity extends AppCompatActivity {
 
         //handle button click
         mChooseBtn.setOnClickListener(v -> {
-            //check runtime permission
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                //permission not granted, request it
-                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-
-                //show popup for runtime permission
-                requestPermissions(permissions, PERMISSION_CODE);
-            }
-            else {
-                //permission already granted
-                pickImageFromGallery();
-            }
+            pickPhoto();
         });
 
+        //handle button click
         saveBtn.setOnClickListener(v -> {
-            //check if image is chosen & text field != null
-            if (mImageView.getDrawable() != null && !textField.getText().toString().matches("")) {
-
-               Person person = new Person(textField.getText().toString(), mImageView.getDrawable());
-                //Person person = new Person("erna");
-
-               try {
-                   ((AppHelper) this.getApplication()).addPersons(person);
-                   mImageView.setImageResource(0);
-                   textField.getText().clear();
-                   Toast.makeText(this, "Added person to the database", Toast.LENGTH_SHORT).show();
-               } catch (Exception e) {
-                   e.printStackTrace();
-               }
-            }
-            else {
-                Toast.makeText(this, "You need to pick a image & fill the text field", Toast.LENGTH_SHORT).show();
-            }
+            addPerson();
         });
     }
 
+    //Function for pickingPhoto
+    public void pickPhoto() {
+        //check runtime permission
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            //permission not granted, request it
+            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+            //show popup for runtime permission
+            requestPermissions(permissions, PERMISSION_CODE);
+        }
+        else {
+            //permission already granted
+            pickImageFromGallery();
+        }
+    }
+
+    //Function for adding person to db
+    public void addPerson() {
+        //check if image is chosen & text field != null
+        if (mImageView.getDrawable() != null && !textField.getText().toString().matches("")) {
+
+            //Creates new person from selected pic & name
+            //Person person = new Person(textField.getText().toString(), mImageView.getDrawable());
+            Person person = new Person(textField.getText().toString(), ((AppHelper) this.getApplication()).getCurrentSelectedPic());
+
+            try {
+                //Adds newly created person to the db
+                ((AppHelper) this.getApplication()).addPersons(person);
+
+                //Clearing the imageView and editText
+                mImageView.setImageResource(0);
+                textField.getText().clear();
+
+                //Sending success message to user
+                Toast.makeText(this, "Added person to the database", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                //Sending error message to user
+                Toast.makeText(this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            //Sending error message to user
+            Toast.makeText(this, "You need to pick a image & fill the text field", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //Function for opening gallery
     private void pickImageFromGallery() {
         //intent to pick image
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -104,6 +126,10 @@ public class AddActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             //Set image to image view
             mImageView.setImageURI(data.getData());
+
+            //Set image as current picked image in db
+            ((AppHelper) this.getApplication()).addCurrentSelectedPic(data.getData());
+
             Toast.makeText(this, "Image picked!", Toast.LENGTH_SHORT).show();
         }
     }
