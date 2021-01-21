@@ -8,7 +8,7 @@ import com.example.thenamequizapp.classes.Person;
 import java.util.ArrayList;
 
 public class AppHelper extends Application {
-    private ArrayList<Person> persons = new ArrayList<Person>();
+    private final ArrayList<Person> persons = new ArrayList<Person>();
     private Uri currentSelectedPic;
 
     public ArrayList<Person> getPersons() {
