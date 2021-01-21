@@ -17,13 +17,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/quizTitle"
+    <ImageView
+        android:id="@+id/quiz_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is the quiz activity"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="73dp"
+        app:layout_constraintBottom_toTopOf="@+id/quizAns_Txt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <EditText
+        android:id="@+id/quizAns_Txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="255dp"
+        android:ems="10"
+        android:hint="@string/type_a_name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/quizNext_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:text="@string/next"
+        app:layout_constraintEnd_toEndOf="@+id/quizAns_Txt"
+        app:layout_constraintStart_toStartOf="@+id/quizAns_Txt"
+        app:layout_constraintTop_toBottomOf="@+id/quizAns_Txt" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

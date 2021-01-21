@@ -29,17 +29,9 @@ public class Person {
     public int getIntImg() {
         return intImg;
     }
-//
-//    public void setIntImg(int intImg) {
-//        this.intImg = intImg;
-//    }
 
     public Uri getUri() {
         return uri;
     }
-//
-//    public void setUri(Uri uri) {
-//        this.uri = uri;
-//    }
 
 }

@@ -23,29 +23,20 @@ public class DatabaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database);
 
-        mListView = (ListView) findViewById(R.id.list_view);
-//        TODO:
-//          -Get all entries in database
-//          -Show all entries that are collected
+        populateList();
+    }
 
+    //Function to fill the listView with persons from db
+    public void populateList() {
+        mListView = (ListView) findViewById(R.id.list_view);
 
         //Gets all persons and puts them in a local variable
         ArrayList<Person> database = ((AppHelper) this.getApplication()).getPersons();
 
-
-        //Taking only persons names for now
-//        ArrayList<String> personNames = new ArrayList<String>();
-//        for (Person person : database) {
-//            personNames.add(person.getName());
-//        }
-
         //Create array adapter
-        //ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, personNames);
         CustomAdapter customAdapter = new CustomAdapter(DatabaseActivity.this, database);
 
-
         //Lists all the persons
-        //mListView.setAdapter(itemsAdapter);
         mListView.setAdapter(customAdapter);
     }
 

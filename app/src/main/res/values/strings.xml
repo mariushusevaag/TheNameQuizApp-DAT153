@@ -9,4 +9,6 @@
     <string name="back_to_menu">Back to menu</string>
     <string name="add_person">Add person</string>
     <string name="textview">TextView</string>
+    <string name="type_a_name">Type a name...</string>
+    <string name="next">Next</string>
 </resources>

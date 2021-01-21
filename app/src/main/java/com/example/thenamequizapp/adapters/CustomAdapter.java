@@ -27,45 +27,51 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
     @Override
     public int getCount() {
+        //Return array size
         return persons.size();
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //ViewHolder mViewHolder = new ViewHolder();
+        //Make variables for use later on
+        ViewHolder mViewHolder = new ViewHolder();
         Person person = persons.get(position);
         String name = person.getName();
 
+        //Check if convertView equals null
         if (convertView == null) {
+            //Inflate the view/layout
             LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.listview_item, parent, false);
-            //mViewHolder.mImage = (ImageView) convertView.findViewById(R.id.imageView);
-            //mViewHolder.
-            //TextView mName = (TextView) convertView.findViewById(R.id.person_name_text);
-            ImageView mImage = (ImageView) convertView.findViewById(R.id.imageView);
-            TextView nameField = (TextView) convertView.findViewById(R.id.person_name_text);
-            //convertView.setTag(mViewHolder);
-        /*} else {
+
+            //connect image and text from view to variable
+            mViewHolder.mImage = (ImageView) convertView.findViewById(R.id.imageView);
+            mViewHolder.mName = (TextView) convertView.findViewById(R.id.person_name_text);
+
+            //set tag for convertView
+            convertView.setTag(mViewHolder);
+        } else {
+            //set holder variable to existing view
             mViewHolder = (ViewHolder) convertView.getTag();
-        }*/
-
-            //mViewHolder.
-            nameField.setText(name);
-
-            if (person.getIntImg() != 0) {
-                //mViewHolder.
-                mImage.setImageResource(person.getIntImg());
-            } else if (person.getUri() != null) {
-                //mViewHolder.
-                mImage.setImageURI(person.getUri());
-            }
         }
+
+            //change the text in the name field to the persons name
+            mViewHolder.mName.setText(name);
+
+            //change the empty imageView to the image connected to the person
+            if (person.getIntImg() != 0) {
+                mViewHolder.mImage.setImageResource(person.getIntImg());
+            } else if (person.getUri() != null) {
+                mViewHolder.mImage.setImageURI(person.getUri());
+            }
+
         return convertView;
     }
-/*
+
+    //ViewHolder class
     static class ViewHolder {
         ImageView mImage;
         TextView mName;
-    }*/
+    }
 }
