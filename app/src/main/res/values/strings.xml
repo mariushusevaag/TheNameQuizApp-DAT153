@@ -5,4 +5,7 @@
     <string name="add_photo">Add Photo</string>
     <string name="save_person">Save Person</string>
     <string name="pic_of_selected_person">Pic of selected person</string>
+    <string name="this_is_the_database_activity">This is the database activity</string>
+    <string name="back_to_menu">Back to menu</string>
+    <string name="add_person">Add person</string>
 </resources>

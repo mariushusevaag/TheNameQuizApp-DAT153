@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".DatabaseActivity">
 
-    <TextView
-        android:id="@+id/databaseTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is the database activity"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/backToMenu"
         android:layout_width="wrap_content"
@@ -23,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:onClick="backToMenu"
-        android:text="Back to menu"
+        android:text="@string/back_to_menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,10 +21,18 @@
         android:id="@+id/addPersonBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:onClick="addPerson"
-        android:text="Add person"
-        app:layout_constraintStart_toStartOf="@+id/databaseTitle"
-        app:layout_constraintTop_toBottomOf="@+id/databaseTitle" />
+        android:text="@string/add_person"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="112dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,10 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,10 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.thenamequizapp.classes.Person;
-import com.example.thenamequizapp.helpers.DatabaseHelper;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import com.example.thenamequizapp.helpers.AppHelper;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -63,22 +56,18 @@ public class AddActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(v -> {
             //check if image is chosen & text field != null
             if (mImageView.getDrawable() != null && !textField.getText().toString().matches("")) {
-                //      TODO:
-                //        -Put person in correct db
-                //
 
                Person person = new Person(textField.getText().toString(), mImageView.getDrawable());
+                //Person person = new Person("erna");
+
                try {
-                   //Noe feil med denne ->
-                   //DatabaseHelper.db.addPerson(person);
+                   ((AppHelper) this.getApplication()).addPersons(person);
                    mImageView.setImageResource(0);
                    textField.getText().clear();
                    Toast.makeText(this, "Added person to the database", Toast.LENGTH_SHORT).show();
                } catch (Exception e) {
                    e.printStackTrace();
                }
-
-
             }
             else {
                 Toast.makeText(this, "You need to pick a image & fill the text field", Toast.LENGTH_SHORT).show();

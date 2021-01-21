@@ -4,16 +4,23 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 
 public class Person {
-//
-//    -Finn ut hvordan man får inn bilder
-//    -Ordne klassen for bilder
 
     private String name;
-    private Drawable img;
+    private int intImg;
+    private Drawable drawImg;
 
-    public Person(String name, Drawable img) {
+    public Person(String name, int intImg) {
         this.name = name;
-        this.img = img;
+        this.intImg = intImg;
+    }
+
+    public Person(String name, Drawable drawImg) {
+        this.name = name;
+        this.drawImg = drawImg;
+    }
+
+    public Person(String name) {
+        this.name = name;
     }
 
     public String getName() {
@@ -24,12 +31,20 @@ public class Person {
         this.name = name;
     }
 
-    public Drawable getImg() {
-        return img;
+    public int getIntImg() {
+        return intImg;
     }
 
-    public void setImg(Drawable img) {
-        this.img = img;
+    public void setIntImg(int intImg) {
+        this.intImg = intImg;
+    }
+
+    public Drawable getDrawImg() {
+        return drawImg;
+    }
+
+    public void setDrawImg(Drawable drawImg) {
+        this.drawImg = drawImg;
     }
 
 }
