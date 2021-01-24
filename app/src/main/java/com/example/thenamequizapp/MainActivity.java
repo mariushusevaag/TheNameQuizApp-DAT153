@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.thenamequizapp.classes.Person;
 import com.example.thenamequizapp.helpers.AppHelper;
@@ -20,6 +21,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         checkDb();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            return;
+        }
+
+        String titleString = extras.getString("titleString");
+
+        final TextView textViewTitle = findViewById(R.id.mainTextTitle);
+
+        textViewTitle.setText(titleString);
     }
 
     //Function for checking if db is empty & adding stock persons if empty

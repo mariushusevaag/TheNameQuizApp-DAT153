@@ -6,26 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".QuizActivity">
 
-    <Button
-        android:id="@+id/backToMenu2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="backToMenu"
-        android:text="Back to Menu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/quiz_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="73dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/person_photo"
         app:layout_constraintBottom_toTopOf="@+id/quizAns_Txt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_launcher_foreground" />
+
 
     <EditText
         android:id="@+id/quizAns_Txt"
@@ -35,6 +26,7 @@
         android:ems="10"
         android:hint="@string/type_a_name"
         android:inputType="textPersonName"
+        android:autofillHints="@string/type_a_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

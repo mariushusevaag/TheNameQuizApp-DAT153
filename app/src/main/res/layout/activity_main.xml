@@ -13,7 +13,7 @@
         android:layout_marginStart="31dp"
         android:layout_marginBottom="22dp"
         android:onClick="startQuiz"
-        android:text="Start Quiz"
+        android:text="@string/start_quiz"
         app:layout_constraintBottom_toTopOf="@+id/exploreDatabaseBtn"
         app:layout_constraintStart_toStartOf="@+id/exploreDatabaseBtn" />
 
@@ -23,8 +23,20 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="323dp"
         android:onClick="exploreDatabase"
-        android:text="Explore Database"
+        android:text="@string/explore_database"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/mainTextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="82dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
