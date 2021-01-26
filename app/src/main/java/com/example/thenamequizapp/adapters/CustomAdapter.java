@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.thenamequizapp.DatabaseActivity;
 import com.example.thenamequizapp.R;
 import com.example.thenamequizapp.classes.Person;
 
@@ -23,6 +27,13 @@ public class CustomAdapter extends ArrayAdapter<String> {
         super(context, R.layout.listview_item);
         this.persons = persons;
         this.mContext = context;
+    }
+
+    public void remove(int position) {
+        Person p = persons.get(position);
+        persons.remove(position);
+        notifyDataSetChanged();
+        Toast.makeText(mContext.getApplicationContext(), "You successfully removed " + p.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -48,9 +59,13 @@ public class CustomAdapter extends ArrayAdapter<String> {
             //connect image and text from view to variable
             mViewHolder.mImage = (ImageView) convertView.findViewById(R.id.imageView);
             mViewHolder.mName = (TextView) convertView.findViewById(R.id.person_name_text);
+            mViewHolder.deleteBtn = (ImageButton) convertView.findViewById(R.id.deleteBtn);
 
             //set tag for convertView
             convertView.setTag(mViewHolder);
+
+            //onClick listener
+            mViewHolder.deleteBtn.setOnClickListener(v -> remove(position));
         } else {
             //set holder variable to existing view
             mViewHolder = (ViewHolder) convertView.getTag();
@@ -73,5 +88,6 @@ public class CustomAdapter extends ArrayAdapter<String> {
     static class ViewHolder {
         ImageView mImage;
         TextView mName;
+        ImageButton deleteBtn;
     }
 }

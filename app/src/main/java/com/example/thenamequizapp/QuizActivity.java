@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thenamequizapp.classes.Person;
 import com.example.thenamequizapp.helpers.AppHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
@@ -22,9 +24,11 @@ public class QuizActivity extends AppCompatActivity {
     ImageView imageView;
     Button button;
     EditText editText;
+    TextView scoreTracker;
 
     // Variables
     ArrayList<Person> persons;
+    ArrayList<Person> quizList;
     Person activePerson;
     int personsAmount;
     int counter;
@@ -39,6 +43,7 @@ public class QuizActivity extends AppCompatActivity {
         imageView = findViewById(R.id.quiz_image);
         button = findViewById(R.id.quizNext_Btn);
         editText = findViewById(R.id.quizAns_Txt);
+        scoreTracker = findViewById(R.id.quizScoreTracker);
 
         button.setOnClickListener(v -> {
             // Check if editText field is empty
@@ -56,10 +61,14 @@ public class QuizActivity extends AppCompatActivity {
         // Bringing in persons from the database
         persons = ((AppHelper) this.getApplication()).getPersons();
 
+        quizList = new ArrayList<>();
+
         // Size of the database array
         personsAmount = persons.size();
 
         continueQuiz();
+
+
     }
 
     public void continueQuiz() {
@@ -74,6 +83,9 @@ public class QuizActivity extends AppCompatActivity {
                 imageView.setImageURI(activePerson.getUri());
             }
 
+            String score = "You're score: " + correct + "/" + counter;
+            scoreTracker.setText(score);
+
         } else {
             Intent i = new Intent(this, MainActivity.class);
 
@@ -83,7 +95,7 @@ public class QuizActivity extends AppCompatActivity {
 
             startActivity(i);
 
-            Toast.makeText(this, "You are done and got " + correct + " correct answers!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Quiz is done. " + correct + " correct answers!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -92,10 +104,14 @@ public class QuizActivity extends AppCompatActivity {
 
         if(answer.matches(activePerson.getName().toLowerCase())) {
             correct++;
+            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Wrong answer... Right answer was: " + activePerson.getName(), Toast.LENGTH_SHORT).show();
         }
 
         // Remove active person from array
-        persons.remove(activePerson);
+        //persons.remove(activePerson);
+        quizList.add(activePerson);
 
         // Count round
         counter += 1;
@@ -107,8 +123,15 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void randomPerson() {
-        Random random = new Random();
+        // New array
+        ArrayList<Person> remainingPersons;
+        remainingPersons = new ArrayList<>(persons);
 
-        activePerson = persons.get(random.nextInt(persons.size()));
+        // Removing persons that have already been picked
+        remainingPersons.removeAll(quizList);
+
+        // Gets a random person from the remaining
+        Random random = new Random();
+        activePerson = remainingPersons.get(random.nextInt(remainingPersons.size()));
     }
 }

@@ -8,7 +8,8 @@ import com.example.thenamequizapp.classes.Person;
 import java.util.ArrayList;
 
 public class AppHelper extends Application {
-    private final ArrayList<Person> persons = new ArrayList<Person>();
+    private ArrayList<Person> persons = new ArrayList<>();
+    private boolean isStart = true;
     private Uri currentSelectedPic;
 
     public ArrayList<Person> getPersons() {
@@ -19,11 +20,23 @@ public class AppHelper extends Application {
         this.persons.add(person);
     }
 
+    public void setPersons(ArrayList<Person> persons) {
+        this.persons = persons;
+    }
+
     public Uri getCurrentSelectedPic() {
         return currentSelectedPic;
     }
 
     public void addCurrentSelectedPic(Uri uri) {
         this.currentSelectedPic = uri;
+    }
+
+    public boolean getIsStart() {
+        return isStart;
+    }
+
+    public void startDone() {
+        this.isStart = false;
     }
 }

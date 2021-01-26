@@ -5,12 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.thenamequizapp.adapters.CustomAdapter;
 import com.example.thenamequizapp.classes.Person;
 import com.example.thenamequizapp.helpers.AppHelper;
+import com.google.android.material.behavior.SwipeDismissBehavior;
+import com.hudomju.swipe.SwipeToDismissTouchListener;
+import com.hudomju.swipe.adapter.ListViewAdapter;
 
 import java.util.ArrayList;
 
@@ -38,12 +44,8 @@ public class DatabaseActivity extends AppCompatActivity {
 
         //Lists all the persons
         mListView.setAdapter(customAdapter);
-    }
 
-    public void backToMenu(View View) {
-        Intent i = new Intent(this, MainActivity.class);
 
-        startActivity(i);
     }
 
     public void addPerson(View View) {

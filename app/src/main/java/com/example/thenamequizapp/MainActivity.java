@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
     public void checkDb() {
         //Brings persons from db
         ArrayList<Person> database = ((AppHelper) this.getApplication()).getPersons();
-
+        boolean isStart = ((AppHelper) this.getApplication()).getIsStart();
         //Checks if the  db is empty
-        if(database.isEmpty()) {
+        if(database.isEmpty() && isStart) {
             //Makes persons
             Person p1 = new Person("Jens", R.drawable.jens);
             Person p2 = new Person("Erna", R.drawable.erna);
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             //Adds persons to db
             ((AppHelper) this.getApplication()).addPersons(p1);
             ((AppHelper) this.getApplication()).addPersons(p2);
+
+            //Sets start boolean to false
+            ((AppHelper) this.getApplication()).startDone();
         }
     }
 
