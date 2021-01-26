@@ -50,6 +50,7 @@ public class QuizActivity extends AppCompatActivity {
             if (!editText.getText().toString().matches("")) {
                 nextBtnClick();
             } else {
+                // Let the user know that he/she needs to fill out the name field
                 Toast.makeText(this, "You need to write an answer", Toast.LENGTH_SHORT).show();
             }
         });
@@ -67,8 +68,6 @@ public class QuizActivity extends AppCompatActivity {
         personsAmount = persons.size();
 
         continueQuiz();
-
-
     }
 
     public void continueQuiz() {
@@ -77,24 +76,24 @@ public class QuizActivity extends AppCompatActivity {
             randomPerson();
 
             // Inserts photo of person to the view
-            if (activePerson.getIntImg() != 0) {
-                imageView.setImageResource(activePerson.getIntImg());
-            } else if(activePerson.getUri() != null) {
+            if(activePerson.getUri() != null) {
                 imageView.setImageURI(activePerson.getUri());
             }
 
+            // Show the current score on the screen during the quiz
             String score = "You're score: " + correct + "/" + counter;
             scoreTracker.setText(score);
 
         } else {
+            // Handling what to do when the quiz is done
             Intent i = new Intent(this, MainActivity.class);
 
-            String resultTxt = correct + "/" + personsAmount;
-
-            i.putExtra("titleString", "Latest score: " + resultTxt);
+            ((AppHelper) this.getApplication()).setLastScore(correct);
+            ((AppHelper) this.getApplication()).setTotalScorePossible(personsAmount);
 
             startActivity(i);
 
+            // Write a msg to user about quiz being done & the users score
             Toast.makeText(this, "Quiz is done. " + correct + " correct answers!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -102,6 +101,7 @@ public class QuizActivity extends AppCompatActivity {
     public void nextBtnClick() {
         String answer = editText.getText().toString().toLowerCase();
 
+        // Check if the answer was correct or not & let the user know
         if(answer.matches(activePerson.getName().toLowerCase())) {
             correct++;
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
@@ -109,12 +109,11 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(this, "Wrong answer... Right answer was: " + activePerson.getName(), Toast.LENGTH_SHORT).show();
         }
 
-        // Remove active person from array
-        //persons.remove(activePerson);
+        // Add person to another array to keep track of the persons
         quizList.add(activePerson);
 
         // Count round
-        counter += 1;
+        counter++;
 
         // Clear textfield
         editText.getText().clear();
@@ -122,6 +121,7 @@ public class QuizActivity extends AppCompatActivity {
         continueQuiz();
     }
 
+    // Method to get a random person from all remainings
     public void randomPerson() {
         // New array
         ArrayList<Person> remainingPersons;
@@ -133,5 +133,13 @@ public class QuizActivity extends AppCompatActivity {
         // Gets a random person from the remaining
         Random random = new Random();
         activePerson = remainingPersons.get(random.nextInt(remainingPersons.size()));
+    }
+
+    // Handle back button click
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, MainActivity.class);
+
+        startActivity(i);
     }
 }

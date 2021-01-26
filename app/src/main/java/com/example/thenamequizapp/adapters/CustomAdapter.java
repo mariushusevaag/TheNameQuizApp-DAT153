@@ -29,6 +29,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
         this.mContext = context;
     }
 
+    // Removes a selected person. Used when clicking on the delete icon
     public void remove(int position) {
         Person p = persons.get(position);
         persons.remove(position);
@@ -75,9 +76,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
             mViewHolder.mName.setText(name);
 
             //change the empty imageView to the image connected to the person
-            if (person.getIntImg() != 0) {
-                mViewHolder.mImage.setImageResource(person.getIntImg());
-            } else if (person.getUri() != null) {
+            if (person.getUri() != null) {
                 mViewHolder.mImage.setImageURI(person.getUri());
             }
 

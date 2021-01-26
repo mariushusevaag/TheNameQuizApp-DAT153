@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class DatabaseActivity extends AppCompatActivity {
 
+    // View
     ListView mListView;
 
     @Override
@@ -29,6 +30,7 @@ public class DatabaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database);
 
+        // Fills the list view with persons
         populateList();
     }
 
@@ -44,12 +46,19 @@ public class DatabaseActivity extends AppCompatActivity {
 
         //Lists all the persons
         mListView.setAdapter(customAdapter);
-
-
     }
 
+    // Redirecting to add person view
     public void addPerson(View View) {
         Intent i = new Intent(this, AddActivity.class);
+
+        startActivity(i);
+    }
+
+    // Handling back button press
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, MainActivity.class);
 
         startActivity(i);
     }

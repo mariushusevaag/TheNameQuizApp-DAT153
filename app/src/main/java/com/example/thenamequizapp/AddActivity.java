@@ -18,11 +18,13 @@ import com.example.thenamequizapp.helpers.AppHelper;
 
 public class AddActivity extends AppCompatActivity {
 
+    // View
     ImageView mImageView;
     Button mChooseBtn;
     Button saveBtn;
     EditText textField;
 
+    // Codes
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
 
@@ -38,14 +40,10 @@ public class AddActivity extends AppCompatActivity {
         textField = findViewById(R.id.addPersonNameEdit);
 
         //handle button click
-        mChooseBtn.setOnClickListener(v -> {
-            pickPhoto();
-        });
+        mChooseBtn.setOnClickListener(v -> pickPhoto());
 
         //handle button click
-        saveBtn.setOnClickListener(v -> {
-            addPerson();
-        });
+        saveBtn.setOnClickListener(v -> addPerson());
     }
 
     //Function for pickingPhoto
@@ -70,16 +68,20 @@ public class AddActivity extends AppCompatActivity {
         if (mImageView.getDrawable() != null && !textField.getText().toString().matches("")) {
 
             //Creates new person from selected pic & name
-            //Person person = new Person(textField.getText().toString(), mImageView.getDrawable());
             Person person = new Person(textField.getText().toString(), ((AppHelper) this.getApplication()).getCurrentSelectedPic());
 
             try {
                 //Adds newly created person to the db
                 ((AppHelper) this.getApplication()).addPersons(person);
 
-                //Clearing the imageView and editText
+                // Clearing the imageView and editText || Move as we are now redirecting straight from the add???
                 mImageView.setImageResource(0);
                 textField.getText().clear();
+
+                // Redirecting to database view when done adding new person
+                Intent i = new Intent(this, DatabaseActivity.class);
+
+                startActivity(i);
 
                 //Sending success message to user
                 Toast.makeText(this, "Added person to the database", Toast.LENGTH_SHORT).show();
@@ -118,7 +120,7 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    //handle result of picked image
+    // Handle result of picked image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -134,7 +136,9 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    public void backToDatabase(View View) {
+    // Handling back button press
+    @Override
+    public void onBackPressed() {
         Intent i = new Intent(this, DatabaseActivity.class);
 
         startActivity(i);
