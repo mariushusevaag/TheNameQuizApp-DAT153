@@ -2,9 +2,23 @@ package com.example.thenamequizapp.classes;
 
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "person")
 public class Person {
-    private String name;
-    private Uri uri;
+    @PrimaryKey(autoGenerate = true)
+    public int pid;
+
+    @ColumnInfo(name = "name")
+    @NonNull
+    public String name;
+
+    @ColumnInfo(name = "uri")
+    @NonNull
+    public Uri uri;
 
     // Constructor
     public Person(String name, Uri uri) {

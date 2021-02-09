@@ -11,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thenamequizapp.classes.Helper;
 import com.example.thenamequizapp.classes.Person;
-import com.example.thenamequizapp.helpers.AppHelper;
+import com.example.thenamequizapp.database.AppDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
@@ -27,17 +29,21 @@ public class QuizActivity extends AppCompatActivity {
     TextView scoreTracker;
 
     // Variables
-    ArrayList<Person> persons;
-    ArrayList<Person> quizList;
+    List<Person> persons;
+    List<Person> quizList;
     Person activePerson;
     int personsAmount;
     int counter;
     int correct;
 
+    AppDatabase appDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        appDb = AppDatabase.getInstance(this);
 
         // Views
         imageView = findViewById(R.id.quiz_image);
@@ -58,9 +64,9 @@ public class QuizActivity extends AppCompatActivity {
         startQuiz();
     }
 
-    public void startQuiz() {
+    private void startQuiz() {
         // Bringing in persons from the database
-        persons = ((AppHelper) this.getApplication()).getPersons();
+        persons = appDb.personDao().getPersons();
 
         quizList = new ArrayList<>();
 
@@ -88,10 +94,11 @@ public class QuizActivity extends AppCompatActivity {
             // Handling what to do when the quiz is done
             Intent i = new Intent(this, MainActivity.class);
 
-            ((AppHelper) this.getApplication()).setLastScore(correct);
-            ((AppHelper) this.getApplication()).setTotalScorePossible(personsAmount);
+            Helper helper = new Helper(true, correct, personsAmount);
+            appDb.helperDao().updateHelper(helper);
 
             startActivity(i);
+            finish();
 
             // Write a msg to user about quiz being done & the users score
             Toast.makeText(this, "Quiz is done. " + correct + " correct answers!", Toast.LENGTH_SHORT).show();

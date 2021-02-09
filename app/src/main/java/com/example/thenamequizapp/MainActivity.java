@@ -10,41 +10,55 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.thenamequizapp.classes.Helper;
 import com.example.thenamequizapp.classes.Person;
-import com.example.thenamequizapp.helpers.AppHelper;
+import com.example.thenamequizapp.database.AppDatabase;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private AppDatabase appDb;
+    private Helper helper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        appDb = AppDatabase.getInstance(this);
 
         // Checks if the app already been started
-        checkDb();
+        helper = appDb.helperDao().getHelper();
+        if (helper == null) {checkDb();}
 
+        // Connects text view
         final TextView textViewTitle = findViewById(R.id.mainTextTitle);
 
         // Gets numbers from last quiz
-        int lastScore = ((AppHelper) this.getApplication()).getLastScore();
-        int possibleLastScore = ((AppHelper) this.getApplication()).getTotalScorePossible();
+        if(helper != null) {
+            int lastScore = helper.getLastScore();
+            int possibleLastScore = helper.getTotalScorePossible();
 
-        // Checking if there has been any quiz
-        if (possibleLastScore != 0) {
-            // Views the last result
-            String lastScoreTxt = "You're last score was: " + lastScore + "/" + possibleLastScore;
-            textViewTitle.setText(lastScoreTxt);
+            // Checking if there has been any quiz
+            if (possibleLastScore != 0) {
+                // Views the last result
+                String lastScoreTxt = "You're last score was: " + lastScore + "/" + possibleLastScore;
+                textViewTitle.setText(lastScoreTxt);
+            }
         }
     }
 
     //Function for checking if db is empty & adding stock persons if empty
     public void checkDb() {
         //Brings persons from db
-        ArrayList<Person> database = ((AppHelper) this.getApplication()).getPersons();
-        boolean isStart = ((AppHelper) this.getApplication()).getIsStart();
+        List<Person> persons = appDb.personDao().getPersons();
+
+        //Creates first enty to helper db
+        helper = new Helper();
+
+        Boolean hasStarted = helper.getHasStarted();
+
         //Checks if the  db is empty
-        if(database.isEmpty() && isStart) {
+        if(!hasStarted) {
             //Make URI's out of pre-saved images
             Uri p1Uri = Uri.parse("android.resource://com.example.thenamequizapp/drawable/" + R.drawable.jens);
             Uri p2Uri = Uri.parse("android.resource://com.example.thenamequizapp/drawable/" + R.drawable.erna);
@@ -54,11 +68,12 @@ public class MainActivity extends AppCompatActivity {
             Person p2 = new Person("Erna", p2Uri);
 
             //Adds persons to db
-            ((AppHelper) this.getApplication()).addPersons(p1);
-            ((AppHelper) this.getApplication()).addPersons(p2);
+            appDb.personDao().addPerson(p1);
+            appDb.personDao().addPerson(p2);
 
             //Sets start boolean to false
-            ((AppHelper) this.getApplication()).startDone();
+            helper.setHasStarted(true);
+            appDb.helperDao().updateHelper(helper);
         }
     }
 

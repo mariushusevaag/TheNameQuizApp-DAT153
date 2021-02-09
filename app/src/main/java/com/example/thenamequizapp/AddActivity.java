@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.thenamequizapp.classes.Helper;
 import com.example.thenamequizapp.classes.Person;
-import com.example.thenamequizapp.helpers.AppHelper;
+import com.example.thenamequizapp.database.AppDatabase;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -28,10 +31,14 @@ public class AddActivity extends AppCompatActivity {
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
 
+    AppDatabase appDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        appDb = AppDatabase.getInstance(this);
 
         //Views
         mImageView = findViewById(R.id.image_view);
@@ -68,11 +75,14 @@ public class AddActivity extends AppCompatActivity {
         if (mImageView.getDrawable() != null && !textField.getText().toString().matches("")) {
 
             //Creates new person from selected pic & name
-            Person person = new Person(textField.getText().toString(), ((AppHelper) this.getApplication()).getCurrentSelectedPic());
+            Drawable image = mImageView.getDrawable();
+            Uri uri = Uri.parse(String.valueOf(image));
+
+            Person person = new Person(textField.getText().toString(), uri);
 
             try {
                 //Adds newly created person to the db
-                ((AppHelper) this.getApplication()).addPersons(person);
+                appDb.personDao().addPerson(person);
 
                 // Clearing the imageView and editText || Move as we are now redirecting straight from the add???
                 mImageView.setImageResource(0);
@@ -128,9 +138,6 @@ public class AddActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             //Set image to image view
             mImageView.setImageURI(data.getData());
-
-            //Set image as current picked image in db
-            ((AppHelper) this.getApplication()).addCurrentSelectedPic(data.getData());
 
             Toast.makeText(this, "Image picked!", Toast.LENGTH_SHORT).show();
         }

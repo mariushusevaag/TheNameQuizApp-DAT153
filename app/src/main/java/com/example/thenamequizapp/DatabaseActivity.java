@@ -13,22 +13,24 @@ import android.widget.Toast;
 
 import com.example.thenamequizapp.adapters.CustomAdapter;
 import com.example.thenamequizapp.classes.Person;
-import com.example.thenamequizapp.helpers.AppHelper;
-import com.google.android.material.behavior.SwipeDismissBehavior;
-import com.hudomju.swipe.SwipeToDismissTouchListener;
-import com.hudomju.swipe.adapter.ListViewAdapter;
+import com.example.thenamequizapp.database.AppDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseActivity extends AppCompatActivity {
 
     // View
     ListView mListView;
 
+    AppDatabase appDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database);
+
+        appDb = AppDatabase.getInstance(this);
 
         // Fills the list view with persons
         populateList();
@@ -38,11 +40,11 @@ public class DatabaseActivity extends AppCompatActivity {
     public void populateList() {
         mListView = (ListView) findViewById(R.id.list_view);
 
-        //Gets all persons and puts them in a local variable
-        ArrayList<Person> database = ((AppHelper) this.getApplication()).getPersons();
+        //Gets persons from db
+        List<Person> personList = appDb.personDao().getPersons();
 
         //Create array adapter
-        CustomAdapter customAdapter = new CustomAdapter(DatabaseActivity.this, database);
+        CustomAdapter customAdapter = new CustomAdapter(DatabaseActivity.this, personList);
 
         //Lists all the persons
         mListView.setAdapter(customAdapter);
