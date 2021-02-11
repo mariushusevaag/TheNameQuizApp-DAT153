@@ -1,14 +1,12 @@
 package com.example.thenamequizapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thenamequizapp.classes.Helper;
 import com.example.thenamequizapp.classes.Person;
@@ -19,6 +17,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private AppDatabase appDb;
     private Helper helper;
+    public int lastScore;
+    public int possibleLastScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Gets numbers from last quiz
         if(helper != null) {
-            int lastScore = helper.getLastScore();
-            int possibleLastScore = helper.getTotalScorePossible();
+            lastScore = helper.getLastScore();
+            possibleLastScore = helper.getTotalScorePossible();
 
             // Checking if there has been any quiz
             if (possibleLastScore != 0) {

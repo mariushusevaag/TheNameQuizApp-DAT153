@@ -1,21 +1,16 @@
 package com.example.thenamequizapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thenamequizapp.adapters.CustomAdapter;
 import com.example.thenamequizapp.classes.Person;
 import com.example.thenamequizapp.database.AppDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseActivity extends AppCompatActivity {
@@ -24,6 +19,7 @@ public class DatabaseActivity extends AppCompatActivity {
     ListView mListView;
 
     AppDatabase appDb;
+    public int persons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +27,7 @@ public class DatabaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_database);
 
         appDb = AppDatabase.getInstance(this);
+        persons = appDb.personDao().getPersons().size();
 
         // Fills the list view with persons
         populateList();
