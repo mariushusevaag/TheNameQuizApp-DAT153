@@ -1,7 +1,5 @@
 package com.example.thenamequizapp.classes;
 
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -18,10 +16,10 @@ public class Person {
 
     @ColumnInfo(name = "uri")
     @NonNull
-    public Uri uri;
+    public String uri;
 
     // Constructor
-    public Person(String name, Uri uri) {
+    public Person(String name, String uri) {
         this.name = name;
         this.uri = uri;
     }
@@ -37,7 +35,7 @@ public class Person {
     }
 
     // Gets person photo
-    public Uri getUri() {
+    public String getUri() {
         return uri;
     }
 

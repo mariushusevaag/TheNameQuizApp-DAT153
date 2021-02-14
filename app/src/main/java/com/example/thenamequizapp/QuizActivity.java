@@ -1,22 +1,22 @@
 package com.example.thenamequizapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.thenamequizapp.classes.Helper;
 import com.example.thenamequizapp.classes.Person;
+import com.example.thenamequizapp.converters.Converter;
 import com.example.thenamequizapp.database.AppDatabase;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -83,7 +83,9 @@ public class QuizActivity extends AppCompatActivity {
 
             // Inserts photo of person to the view
             if(activePerson.getUri() != null) {
-                imageView.setImageURI(activePerson.getUri());
+                String stringImage = activePerson.getUri();
+                Bitmap bitmapImage = Converter.StringToBitMap(stringImage);
+                imageView.setImageBitmap(bitmapImage);
             }
 
             // Show the current score on the screen during the quiz

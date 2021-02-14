@@ -13,7 +13,7 @@ import com.example.thenamequizapp.converters.Converter;
 import com.example.thenamequizapp.dao.HelperDao;
 import com.example.thenamequizapp.dao.PersonDao;
 
-@Database(entities = {Person.class, Helper.class}, version = 7, exportSchema = false)
+@Database(entities = {Person.class, Helper.class}, version = 9, exportSchema = false)
 @TypeConverters({Converter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DB_NAME = "app_db";

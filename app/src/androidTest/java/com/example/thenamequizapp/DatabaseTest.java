@@ -73,12 +73,14 @@ public class DatabaseTest {
         checkPersonAmountAfterDeleting(personsInDatabase);
     }
 
-    private void checkPersonAmountAfterAdding(int person) {
+    private boolean checkPersonAmountAfterAdding(int person) {
         assertEquals(aActivityTestRule.getActivity().appDb.personDao().getPersons().size(), person+1);
+        return true;
     }
 
-    private void checkPersonAmountAfterDeleting(int person) {
+    private boolean checkPersonAmountAfterDeleting(int person) {
         assertEquals(aActivityTestRule.getActivity().appDb.personDao().getPersons().size(), person - 1);
+        return true;
     }
 
     private ActivityResult createGalleryPickActivityResultStub() {

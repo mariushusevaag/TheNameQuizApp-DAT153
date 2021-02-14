@@ -3,8 +3,10 @@ package com.example.thenamequizapp;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,13 +14,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thenamequizapp.classes.Person;
+import com.example.thenamequizapp.converters.Converter;
 import com.example.thenamequizapp.database.AppDatabase;
 
-public class AddActivity extends AppCompatActivity {
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
+public class AddActivity extends AppCompatActivity {
     // View
     ImageView mImageView;
     Button mChooseBtn;
@@ -31,6 +37,8 @@ public class AddActivity extends AppCompatActivity {
 
     AppDatabase appDb;
     public int persons;
+
+    String imageSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +83,7 @@ public class AddActivity extends AppCompatActivity {
         //check if image is chosen & text field != null
         if (mImageView.getDrawable() != null && !textField.getText().toString().matches("")) {
 
-            //Creates new person from selected pic & name
-            Drawable image = mImageView.getDrawable();
-            Uri uri = Uri.parse(String.valueOf(image));
-
-            Person person = new Person(textField.getText().toString(), uri);
+            Person person = new Person(textField.getText().toString(), imageSource);
 
             try {
                 //Adds newly created person to the db
@@ -113,6 +117,7 @@ public class AddActivity extends AppCompatActivity {
     private void pickImageFromGallery() {
         //intent to pick image
         Intent intent = new Intent(Intent.ACTION_PICK);
+
         intent.setType("image/*");
         startActivityForResult(intent, IMAGE_PICK_CODE);
     }
@@ -132,6 +137,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     // Handle result of picked image
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -139,10 +145,20 @@ public class AddActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             //Set image to image view
             mImageView.setImageURI(data.getData());
+            mImageView.invalidate();
+
+            Uri imageUri = data.getData();
+            try {
+                InputStream is = getContentResolver().openInputStream(imageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                imageSource = Converter.BitMapToString(bitmap);
+            }
+            catch (FileNotFoundException e){e.printStackTrace();}
 
             Toast.makeText(this, "Image picked!", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     // Handling back button press
     @Override

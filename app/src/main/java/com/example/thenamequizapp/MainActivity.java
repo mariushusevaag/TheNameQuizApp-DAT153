@@ -1,6 +1,8 @@
 package com.example.thenamequizapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thenamequizapp.classes.Helper;
 import com.example.thenamequizapp.classes.Person;
+import com.example.thenamequizapp.converters.Converter;
 import com.example.thenamequizapp.database.AppDatabase;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private Helper helper;
     public int lastScore;
     public int possibleLastScore;
+    private String imageSourceJens;
+    private String imageSourceErna;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         //Brings persons from db
         List<Person> persons = appDb.personDao().getPersons();
 
-        //Creates first enty to helper db
+        //Creates first entry to helper db
         helper = new Helper();
 
         Boolean hasStarted = helper.getHasStarted();
@@ -63,9 +70,20 @@ public class MainActivity extends AppCompatActivity {
             Uri p1Uri = Uri.parse("android.resource://com.example.thenamequizapp/drawable/" + R.drawable.jens);
             Uri p2Uri = Uri.parse("android.resource://com.example.thenamequizapp/drawable/" + R.drawable.erna);
 
+            try {
+                InputStream is1 = getContentResolver().openInputStream(p1Uri);
+                InputStream is2 = getContentResolver().openInputStream(p2Uri);
+                Bitmap bitmap1 = BitmapFactory.decodeStream(is1);
+                Bitmap bitmap2 = BitmapFactory.decodeStream(is2);
+                imageSourceJens = Converter.BitMapToString(bitmap1);
+                imageSourceErna = Converter.BitMapToString(bitmap2);
+            } catch (FileNotFoundException e) {
+
+            }
+
             //Makes persons
-            Person p1 = new Person("Jens", p1Uri);
-            Person p2 = new Person("Erna", p2Uri);
+            Person p1 = new Person("Jens", imageSourceJens);
+            Person p2 = new Person("Erna", imageSourceErna);
 
             //Adds persons to db
             appDb.personDao().addPerson(p1);
